@@ -1,0 +1,16 @@
+package proje3;
+
+public class DataItem {
+
+	private String iData; // data item (key)
+
+	public DataItem(String milliParkAd){ 
+	iData = milliParkAd; 
+	}
+
+	public int getKey(){ 
+		return iData.hashCode(); 
+	}
+	
+
+}

@@ -1,0 +1,135 @@
+package proje3;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Tree
+{
+	private TreeNode root;
+	
+	public Tree(){ 
+		root = null; 
+	}
+	public TreeNode getRoot(){
+		return root; 
+	}
+	
+	public void preOrderKelime(TreeNode localRoot) {
+		if(localRoot!=null){	
+			String[] kelimeler = null;
+			for(int i = 0; i< localRoot.data.getCumleler().size();i++) {
+				kelimeler = localRoot.data.getCumleler().get(i).split(" ");
+				System.out.print(kelimeler.length);
+				System.out.println();
+				for(int j = 0; j< kelimeler.length ; j ++) {	
+					insertKelime(kelimeler[j]);
+					System.out.print(kelimeler[j]+" ");
+				}
+				kelimeler = null;
+			}
+			preOrderKelime(localRoot.leftChild);
+			preOrderKelime(localRoot.rightChild);
+		}
+	}
+	
+	public void insertKelime(String kelime){
+		TreeNode newNode = new TreeNode();
+		newNode.kelimedata = kelime;
+		if(root==null) {
+			root = newNode;
+		}
+		else{
+			TreeNode current = root;
+			TreeNode parent;
+			while(true){
+				parent = current;
+				if(kelime.compareTo(current.kelimedata) < 0){
+					current = current.leftChild;
+					if(current==null){
+						parent.leftChild=newNode;
+						return;
+					}
+				} 
+				else{
+					current = current.rightChild;
+					if(current==null){
+						parent.rightChild=newNode;
+						return;
+					}
+				}
+			}
+		} // end else not root
+	} // end insert()
+
+	
+	
+	// A�ac�n preOrder Dola��lmas�
+	public void preOrder(TreeNode localRoot){
+		if(localRoot!=null){
+			localRoot.displayNode();
+			preOrder(localRoot.leftChild);
+			preOrder(localRoot.rightChild);
+		
+		}
+	}
+
+	public int[] maxDepthAndNumNodes(TreeNode root) {
+        int[] result = new int[2];
+        if (root == null) {
+            return result;
+        }
+
+        int leftResult[] = maxDepthAndNumNodes(root.leftChild);
+        int rightResult[] = maxDepthAndNumNodes(root.rightChild);
+
+        result[0] = Math.max(leftResult[0], rightResult[0]) + 1;
+        result[1] = leftResult[1] + rightResult[1] + 1;
+        //result[2] = double logaritma = intValue.(result[1] / Math.log(2));
+
+        return result;
+    }
+      
+
+	// A�aca bir d���m eklemeyi sa�layan metot
+	public void insert(milliPark newpark){
+		TreeNode newNode = new TreeNode();
+		newNode.data = newpark;
+		if(root==null) {
+			root = newNode;
+		}
+		else{
+			TreeNode current = root;
+			TreeNode parent;
+			while(true){
+				parent = current;
+				if(newpark.getMilliPark_Adi().compareTo(current.data.getMilliPark_Adi()) < 0){
+					current = current.leftChild;
+					if(current==null){
+						parent.leftChild=newNode;
+						return;
+					}
+				} 
+				else{
+					current = current.rightChild;
+					if(current==null){
+						parent.rightChild=newNode;
+						return;
+					}
+				}
+			}
+		} // end else not root
+	} // end insert()
+	
+	public void iliBul(String parkAdi,TreeNode localroot) {
+		String ilkUc = localroot.data.getMilliPark_Adi().substring(0,3);
+		if(localroot!=null){
+			if(!parkAdi.equals(ilkUc)){
+				iliBul(parkAdi,localroot.leftChild);
+				iliBul(parkAdi,localroot.rightChild);
+			}
+			else {
+				System.out.println(localroot.data.getIl_Adlari());			
+			}
+		}	
+	}
+} // class Tree

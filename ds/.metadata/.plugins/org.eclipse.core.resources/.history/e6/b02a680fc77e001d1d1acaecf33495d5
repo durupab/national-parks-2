@@ -1,0 +1,50 @@
+package proje3;
+
+public class HashTable {
+
+	private DataItem[] hashArray; // array holds hash table
+	private int arraySize;
+
+
+	public HashTable(int size) {
+	arraySize = size;
+	hashArray = new DataItem[arraySize];
+
+	}
+
+	public void displayTable(){
+		System.out.println("Table: \n ");
+		for(int j=0; j<arraySize; j++){
+			if(hashArray[j] != null) {
+				System.out.println(hashArray[j].getKey() + " ");}
+			else
+				System.out.print("**");
+		}
+		System.out.println("");
+	}
+
+
+	public void insert(DataItem item){
+		String key = item.getKey(); // extract key
+		int hashVal = hashFunc(key); // hash the key
+		//until empty cell or -1,
+		while(hashArray[hashVal] != null && hashArray[hashVal].getKey() != -1)
+		{
+			++hashVal; // go to next cell
+			hashVal %= arraySize; // wraparound if necessary
+		}
+		hashArray[hashVal] = item; // insert item
+	} // end insert()
+
+	public DataItem find(int key) // find item with key
+	{
+	int hashVal = hashFunc(key); // hash the key
+	while(hashArray[hashVal] != null) // until empty cell,
+	{ // found the key?
+	if(hashArray[hashVal].getKey() == key)
+	return hashArray[hashVal]; // yes, return item
+	++hashVal; // go to next cell
+	hashVal %= arraySize; // wraparound if necessary
+	}
+	return null; // can’t find item
+}

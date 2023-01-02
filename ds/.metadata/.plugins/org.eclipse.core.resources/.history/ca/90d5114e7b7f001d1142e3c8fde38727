@@ -1,0 +1,16 @@
+package proje3;
+
+public class HeapNode {
+
+	private String iData; // data item (key)
+	// -------------------------------------------------------------
+	public HeapNode(String key)
+	{ iData = key; }
+	// -------------------------------------------------------------
+	public String getKey()
+	{ return iData; }
+	// -------------------------------------------------------------
+	public void setKey(String id)
+	{ iData = id; }
+
+}

@@ -1,0 +1,76 @@
+package proje3;
+
+public class Heap
+{
+   private MyNode[] heapArray; //elemanlari tutmak icin Node sinifi tipinde liste degiskeni
+   private int maxSize; 
+   private int currentSize; 
+
+   public Heap(int mx) //yapilandirici metot
+   {
+      maxSize = mx;
+      currentSize = 0;
+      heapArray = new MyNode[maxSize]; 
+   }
+
+   //Heap e eleman ekleme metotu
+   public boolean insert(String key)
+   {
+      if (currentSize == maxSize)
+         return false;
+      MyNode newNode = new MyNode(key);
+      heapArray[currentSize] = newNode;
+      trickleUp(currentSize++);
+      return true;
+   } // end insert()
+
+   //Max heap kurallarina uygun olarak nufus oncelikli eleman ekleme icin damlama metotu
+   public void trickleUp(int index)
+   {
+      int parent = (index - 1) / 2;
+      MyNode bottom = heapArray[index];
+
+      while (index > 0 &&
+             heapArray[parent].getKey().split(",")[1].compareTo(bottom.getKey().split(",")[1]) < 0)
+      {
+         heapArray[index] = heapArray[parent];
+         index = parent;
+         parent = (parent - 1) / 2;
+      }
+
+      heapArray[index] = bottom;
+   }
+   
+   public void remove()
+   {
+      MyNode root = heapArray[0];
+      heapArray[0] = heapArray[--currentSize];
+      trickleDown(0);
+     System.out.println(root.getKey());
+   } 
+
+   public void trickleDown(int index)
+   {
+      int largerChild;
+      MyNode top = heapArray[index]; 
+      while (index < currentSize / 2) 
+      {
+         int leftChild = 2 * index + 1;
+         int rightChild = leftChild + 1;
+         
+         if (rightChild < currentSize && 
+             heapArray[leftChild].getKey().split(",")[1].compareTo(heapArray[rightChild].getKey().split(",")[1]) <0)
+
+            largerChild = rightChild;
+         else
+            largerChild = leftChild;
+         if (top.getKey().split(",")[1].compareTo(heapArray[largerChild].getKey().split(",")[1]) >= 0)
+            break;
+         heapArray[index] = heapArray[largerChild];
+         index = largerChild;
+      }
+
+      heapArray[index] = top; 
+   } 
+
+}

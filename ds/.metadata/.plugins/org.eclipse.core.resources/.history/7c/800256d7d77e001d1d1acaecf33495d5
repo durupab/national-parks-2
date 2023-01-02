@@ -1,0 +1,17 @@
+package proje3;
+
+public class MyNode
+{
+   private String iData; 
+   public MyNode(String key)
+   {
+      iData = key;
+   }
+
+
+   public String getKey()
+   {
+      return iData;
+   }
+
+}

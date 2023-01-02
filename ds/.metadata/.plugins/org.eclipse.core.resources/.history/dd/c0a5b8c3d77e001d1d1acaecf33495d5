@@ -1,0 +1,19 @@
+package proje3;
+
+public class WordTree {
+	public void insert(KelimeNode value) {
+		  if (value.compareTo(this.value) < 0) {
+		    if (left == null) {
+		      left = new KelimeNode(value);
+		    } else {
+		      left.insert(value);
+		    }
+		  } else {
+		    if (right == null) {
+		      right = new TreeNode(value);
+		    } else {
+		      right.insert(value);
+		    }
+		  }
+		}
+}

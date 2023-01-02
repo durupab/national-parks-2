@@ -1,0 +1,14 @@
+package proje3;
+
+public class TreeNode {
+
+	public int data;
+	public TreeNode leftChild;
+	public TreeNode rightChild;
+
+	public void displayNode() {
+		System.out.print(" "+data+" "); 
+	}
+	
+
+}

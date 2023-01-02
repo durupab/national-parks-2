@@ -1,0 +1,105 @@
+package proje3;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Scanner;
+
+public class Main{
+
+    public static void main(String[] args) {
+    	
+    	Tree milliParkTree = new Tree();
+    	Tree kelimeTree = new Tree();
+   	
+        String dosya = "C:\\Users\\durup\\Desktop\\05200000027_Duru_Pabuscu\\park.txt";
+        Scanner fileIn = null;
+
+        try {
+            fileIn = new Scanner(new FileInputStream(dosya));
+        }
+        catch(FileNotFoundException e) {
+            System.out.println("Dosya okunamad�.");
+            System.exit(0);
+        }
+
+        String parkadi = null ;
+        String il = null;
+        String yil = null;
+        String yuzOlcumu = null;
+        String[] bilgilerArray = null;
+        //hash table olustur
+        Hashtable<String, milliPark> hash_table =  new Hashtable<String, milliPark>();
+        //heap olustur
+        Heap heap1 = new Heap(50);
+        
+    	fileIn.useDelimiter(",");
+    	while (fileIn.hasNext()) { //dosyadan okuma
+	    	 parkadi = fileIn.next();
+	    	 il = fileIn.next();
+	    	 yuzOlcumu = fileIn.next();
+	    	 yil = fileIn.next();
+	    	 bilgilerArray = fileIn.next().split("/");
+	    	 List<String> cumleler = new ArrayList<String>();
+             for(int i = 0; i < bilgilerArray.length; i++){ 
+                 cumleler.add(bilgilerArray[i]); //cumleler generic listine bilgiler arraylerini ekle
+             }
+	    	 fileIn.nextLine();
+	    	 //milli park nesnesi olustur
+	    	 milliPark park = new milliPark(parkadi,il,yil,yuzOlcumu,cumleler);
+	    	 //milli park nesnelerini milli park agacına insert etme
+             milliParkTree.insert(park); 
+            //kelime agacına kelime ekleme ve sıralama
+           //  kelimeTree.preOrderKelime(milliParkTree.getRoot());
+             //hash table'a key milli park adı variable ekleme
+             hash_table.put(park.getMilliPark_Adi(), park);
+             //heap'e veri ekleme
+             heap1.insert(park);
+
+    	}
+    	System.out.println(milliParkTree.maxDepthAndNumNodes(milliParkTree.getRoot())[0]);
+    	System.out.println(milliParkTree.maxDepthAndNumNodes(milliParkTree.getRoot())[1]);
+    	//milli park agacını pre order yazdır
+    	milliParkTree.preOrder(milliParkTree.getRoot());
+    	
+    	//hash table yazdır
+    	System.out.println("HASH TABLE");
+    	System.out.println(hash_table);
+    	
+        //klavyeden 3 harfli veri girisi
+        System.out.println("Milli Park ad�n� temsil eden ilk 3 harfi giriniz. �lk harfin b�y�k harf olmas�na dikkat ediniz.");
+        Scanner keyboard = new Scanner(System.in);
+        //milli park agacında ili bulma ve yazdırma
+        milliParkTree.iliBul(keyboard.nextLine(),milliParkTree.getRoot());
+
+        //hash tabledan guncelleme yapma
+    	System.out.println(hash_table);
+        System.out.println("G�ncellenmesini istedi�iniz milli Park ad�n� giriniz.");
+        String klavyeMP = keyboard.nextLine();
+       
+        System.out.println("G�ncellenmesini istedi�iniz milli Park�n ilan y�l�n� giriniz.");
+        String klavyeMi = keyboard.nextLine();
+        //hash tableda guncelleme
+        hash_table.get(klavyeMP).setIlan_Yili(klavyeMi); 
+        //hash table guncellenmis hali
+        System.out.println(hash_table);	
+        //heap yazdir
+        System.out.println("HEAP Yazd�r");
+        heap1.yaz();
+        //max 3 yuz olcumlu parki sil
+        System.out.println("HEAP MAX 3 REMOVE");
+        heap1.remove();
+        heap1.remove();
+        heap1.remove();
+
+
+        }
+    	 
+    
+  }
+  
+
+

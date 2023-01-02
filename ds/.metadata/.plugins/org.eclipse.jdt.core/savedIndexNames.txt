@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+C:\Users\durup\Desktop\05200000027_Duru_Pabuscu\.metadata\.plugins\org.eclipse.jdt.core
+1865797976.index
+1695662857.index
+1886827908.index

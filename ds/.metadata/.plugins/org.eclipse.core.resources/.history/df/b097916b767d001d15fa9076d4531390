@@ -1,0 +1,15 @@
+package proje3;
+
+class TreeNode {
+
+	public int data;
+	public TreeNode leftChild;
+	public TreeNode rightChild;
+
+	public void displayNode() {
+		// TODO Auto-generated method stub
+		System.out.print(" "+data+" "); 
+	}
+	
+
+}

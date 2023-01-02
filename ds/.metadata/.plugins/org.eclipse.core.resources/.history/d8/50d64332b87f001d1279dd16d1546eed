@@ -1,0 +1,140 @@
+package proje3;
+
+import java.util.Arrays;
+
+public class Tree
+{
+	private TreeNode root;
+	
+	public Tree(){ 
+		root = null; 
+	}
+	public TreeNode getRoot(){
+		return root; 
+	}
+	
+	public void preOrderKelime(TreeNode localRoot) {
+		if(localRoot!=null){	
+			String[] kelimeler = null;
+			for(int i = 0; i< localRoot.data.getCumleler().size();i++) {
+				kelimeler = localRoot.data.getCumleler().get(i).split(" ");
+				for(int j = 0; j< kelimeler.length ; j ++) {
+					insertKelime(kelimeler[j]);
+					System.out.println(kelimeler[j]);
+					kelimeler = null;
+				}
+				
+			}
+			preOrderKelime(localRoot.leftChild);
+			preOrderKelime(localRoot.rightChild);
+		}
+	}
+	
+	
+	//public void sayKelime()
+	
+	public void insertKelime(String kelime){
+		TreeNode newNode = new TreeNode();
+		newNode.kelimedata = kelime;
+		if(root==null) {
+			root = newNode;
+		}
+		else{
+			TreeNode current = root;
+			TreeNode parent;
+			while(true){
+				parent = current;
+				if(kelime.compareTo(current.kelimedata) < 0){
+					current = current.leftChild;
+					if(current==null){
+						parent.leftChild=newNode;
+						return;
+					}
+				} 
+				else{
+					current = current.rightChild;
+					if(current==null){
+						parent.rightChild=newNode;
+						return;
+					}
+				}
+			}
+		} // end else not root
+	} // end insert()
+
+	
+	
+	// Aðacýn preOrder Dolaþýlmasý
+	public void preOrder(TreeNode localRoot){
+		if(localRoot!=null){
+			localRoot.displayNode();
+			preOrder(localRoot.leftChild);
+			preOrder(localRoot.rightChild);
+		
+		}
+	}
+	
+	int dugum , dengeli_dugum = 0;
+	public int maxDepth(TreeNode localRoot)
+	  { 
+	    // Root being null means tree doesn't exist.
+	    if (localRoot == null) 
+	      System.out.println("Tree doesnt exist.");
+	    //nodelarý yazdýrma ve dugum bulma
+	    localRoot.displayNode();
+	    dugum++;
+	    // Get the depth of the left and right subtree 
+	    // using recursion.
+	    int leftDepth = maxDepth(localRoot.leftChild); 
+	    int rightDepth = maxDepth(localRoot.rightChild);
+	    System.out.println(dugum);
+	    // Choose the larger one and add the root to it.
+	    if (leftDepth > rightDepth) 
+	      return (leftDepth + 1); 
+	    else 
+	      return (rightDepth + 1);
+	  }
+
+	// Aðaca bir düðüm eklemeyi saðlayan metot
+	public void insert(milliPark newpark){
+		TreeNode newNode = new TreeNode();
+		newNode.data = newpark;
+		if(root==null) {
+			root = newNode;
+		}
+		else{
+			TreeNode current = root;
+			TreeNode parent;
+			while(true){
+				parent = current;
+				if(newpark.getMilliPark_Adi().compareTo(current.data.getMilliPark_Adi()) < 0){
+					current = current.leftChild;
+					if(current==null){
+						parent.leftChild=newNode;
+						return;
+					}
+				} 
+				else{
+					current = current.rightChild;
+					if(current==null){
+						parent.rightChild=newNode;
+						return;
+					}
+				}
+			}
+		} // end else not root
+	} // end insert()
+	
+	public void iliBul(String parkAdi,TreeNode localroot) {
+		String ilkUc = localroot.data.getMilliPark_Adi().substring(0,3);
+		if(localroot!=null){
+			if(!parkAdi.equals(ilkUc)){
+				iliBul(parkAdi,localroot.leftChild);
+				iliBul(parkAdi,localroot.rightChild);
+			}
+			else {
+				System.out.println(localroot.data.getIl_Adlari());			
+			}
+		}	
+	}
+} // class Tree
